@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,15 +15,11 @@ import java.sql.SQLException;
 /**
  * Created by Tanya on 07.11.2016.
  */
-@Repository
+@Repository("userLoginDAO")
 public class UserLoginDAO {
 
-    private JdbcTemplate jdbcTemplate;
-
     @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
+    private JdbcTemplate jdbcTemplate;
 
     public User verifyUser(String login, String pass) {
         User returnUser = null;
