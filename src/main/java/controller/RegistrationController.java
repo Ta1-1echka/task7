@@ -36,7 +36,7 @@ public class RegistrationController {
         User user = userRegistrateDAO.findUserByLogin(login);
         if (user == null) {
             userRegistrateDAO.addUser(login, password, firstname, lastname, email);
-            //TODO
+            modelAndView.addObject("user", user);
             modelAndView.setViewName("welcome");
 
         } else {

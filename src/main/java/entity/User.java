@@ -1,8 +1,11 @@
 package entity;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Created by Tanya on 07.11.2016.
  */
+
 public class User {
     private int iduser;
     private String login, password, firstname, lastname, email;
