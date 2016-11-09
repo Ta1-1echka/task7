@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/registration")
+@SessionAttributes("user")
 public class RegistrationController {
 
     @RequestMapping(method = RequestMethod.GET)
@@ -36,6 +38,7 @@ public class RegistrationController {
         User user = userRegistrateDAO.findUserByLogin(login);
         if (user == null) {
             userRegistrateDAO.addUser(login, password, firstname, lastname, email);
+            user = userRegistrateDAO.findUserByLogin(login);
             modelAndView.addObject("user", user);
             modelAndView.setViewName("welcome");
 

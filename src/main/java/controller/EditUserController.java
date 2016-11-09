@@ -2,9 +2,7 @@ package controller;
 
 import entity.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -12,13 +10,21 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/edit")
+@SessionAttributes("user")
 public class EditUserController {
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView redirectEditPage(@ModelAttribute("user") User user) {
+    @RequestMapping(method = RequestMethod.POST)
+    public ModelAndView redirectEditPage(@SessionAttribute("user") User user) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", user);
         modelAndView.setViewName("editUser");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public ModelAndView saveUserEdition(@SessionAttribute("user") User user, ModelAndView modelAndView)
+    {
+       //TODO
         return modelAndView;
     }
 }

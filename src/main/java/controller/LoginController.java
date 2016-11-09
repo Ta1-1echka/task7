@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/")
+@SessionAttributes("user")
 public class LoginController {
 
     @RequestMapping(method = RequestMethod.GET)
