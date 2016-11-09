@@ -1,7 +1,6 @@
 package controller;
 
-import database.UserLoginDAO;
-import database.UserRegistrateDAO;
+import database.UserDAO;
 import entity.User;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -34,11 +33,11 @@ public class RegistrationController {
                                      @RequestParam("lastname") String lastname,
                                      @RequestParam("email") String email) {
         AbstractApplicationContext ctx = new ClassPathXmlApplicationContext("database.xml");
-        UserRegistrateDAO userRegistrateDAO = (UserRegistrateDAO) ctx.getBean("userRegistrateDAO");
-        User user = userRegistrateDAO.findUserByLogin(login);
+        UserDAO userDAO = (UserDAO) ctx.getBean("userDAO");
+        User user = userDAO.findUserByLogin(login);
         if (user == null) {
-            userRegistrateDAO.addUser(login, password, firstname, lastname, email);
-            user = userRegistrateDAO.findUserByLogin(login);
+            userDAO.addUser(login, password, firstname, lastname, email);
+            user = userDAO.findUserByLogin(login);
             modelAndView.addObject("user", user);
             modelAndView.setViewName("welcome");
 

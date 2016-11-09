@@ -6,22 +6,25 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
+
 <html>
 <head>
     <title>Редактирование информации о пользователе</title>
 </head>
 <body>
-<form action="/edit/save" method="post" modelAttribute="user">
+<form:form action="/edit/save" method="post" modelAttribute="user">
     <table align="center">
         <tr>
             <td>Login</td>
-            <td><input type="text" value="${user.login}" required></td>
+            <td><form:input path="login"/></td>
         </tr>
         <tr>
             <td>
                 Firstname
             </td>
-            <td><input type="text" value="${user.firstname}" required></td>
+            <td><form:input path="firstname"/></td>
 
         </tr>
         <tr>
@@ -29,7 +32,7 @@
                 Lastname
             </td>
             <td>
-                <input type="text" value="${user.firstname}" required></td>
+                <form:input path="lastname"/></td>
             </td>
         </tr>
         <tr>
@@ -37,7 +40,7 @@
                 Email
             </td>
             <td>
-                <input type="text" value="${user.email}" required></td>
+                <form:input path="email" /></td>
             </td>
 
         </tr>
@@ -46,7 +49,12 @@
                 <input type="submit" value="Сохранить изменения">
             </td>
         </tr>
+        <tr>
+            <td colspan="2">
+                ${message}
+            </td>
+        </tr>
     </table>
-</form>
+</form:form>
 </body>
 </html>

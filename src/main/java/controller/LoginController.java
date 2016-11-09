@@ -1,11 +1,14 @@
 package controller;
 
-import database.UserLoginDAO;
+import database.UserDAO;
 import entity.User;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -27,8 +30,8 @@ public class LoginController {
     public ModelAndView checkUser(ModelAndView modelAndView, @RequestParam("login") String login,
                                   @RequestParam("password") String password) {
         AbstractApplicationContext ctx = new ClassPathXmlApplicationContext("database.xml");
-        UserLoginDAO userLoginDAO = (UserLoginDAO) ctx.getBean("userLoginDAO");
-        User user = userLoginDAO.verifyUser(login, password);
+        UserDAO userDAO = (UserDAO) ctx.getBean("userDAO");
+        User user = userDAO.verifyUserByLoginPass(login, password);
         if (user != null) {
             modelAndView.addObject("user", user);
             modelAndView.setViewName("welcome");
