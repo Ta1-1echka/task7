@@ -14,7 +14,7 @@ import java.sql.SQLException;
  * Created by Tanya on 09.11.2016.
  */
 @Repository("userDAO")
-public class UserDAO {
+public class UserDAO implements RowMapper<User>{
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -23,22 +23,7 @@ public class UserDAO {
         User returnUser = null;
         try {
             returnUser = this.jdbcTemplate.queryForObject("select * from userinfo where login = ? and password = ?",
-                    new Object[]{login, pass}, new RowMapper<User>() {
-                        @Override
-                        public User mapRow(ResultSet rs, int i) throws SQLException {
-                            if (i >= 0) {
-                                User newUser = new User();
-                                newUser.setIduser(rs.getInt("iduser"));
-                                newUser.setLogin(rs.getString("login"));
-                                newUser.setPassword(rs.getString("password"));
-                                newUser.setFirstname(rs.getString("firstname"));
-                                newUser.setLastname(rs.getString("lastname"));
-                                newUser.setEmail(rs.getString("email"));
-                                return newUser;
-                            } else return null;
-                        }
-
-                    });
+                    new Object[]{login, pass}, this);
         } catch (IncorrectResultSizeDataAccessException ex) {
             return null;
         }
@@ -55,22 +40,7 @@ public class UserDAO {
         User returnUser = null;
         try {
             returnUser = this.jdbcTemplate.queryForObject("select * from userinfo where login = ?",
-                    new Object[]{login}, new RowMapper<User>() {
-                        @Override
-                        public User mapRow(ResultSet rs, int i) throws SQLException {
-                            if (i >= 0) {
-                                User newUser = new User();
-                                newUser.setIduser(rs.getInt("iduser"));
-                                newUser.setLogin(rs.getString("login"));
-                                newUser.setPassword(rs.getString("password"));
-                                newUser.setFirstname(rs.getString("firstname"));
-                                newUser.setLastname(rs.getString("lastname"));
-                                newUser.setEmail(rs.getString("email"));
-                                return newUser;
-                            } else return null;
-                        }
-
-                    });
+                    new Object[]{login}, this);
         } catch (IncorrectResultSizeDataAccessException ex) {
             return null;
         }
@@ -83,5 +53,19 @@ public class UserDAO {
                 "update userinfo set login = ?, password = ?, firstname = ?, lastname = ?," +
                         "email = ? where iduser = ?", user.getLogin(), user.getPassword(),
                 user.getFirstname(), user.getLastname(), user.getEmail(), user.getIduser());
+    }
+
+    @Override
+    public User mapRow(ResultSet rs, int i) throws SQLException {
+        if (i >= 0) {
+            User newUser = new User();
+            newUser.setIduser(rs.getInt("iduser"));
+            newUser.setLogin(rs.getString("login"));
+            newUser.setPassword(rs.getString("password"));
+            newUser.setFirstname(rs.getString("firstname"));
+            newUser.setLastname(rs.getString("lastname"));
+            newUser.setEmail(rs.getString("email"));
+            return newUser;
+        } else return null;
     }
 }

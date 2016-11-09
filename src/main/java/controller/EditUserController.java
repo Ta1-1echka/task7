@@ -2,6 +2,7 @@ package controller;
 
 import database.UserDAO;
 import entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 @SessionAttributes("user")
 public class EditUserController {
 
+    @Autowired
+    UserDAO userDAO;
+
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView redirectEditPage(@SessionAttribute("user") User user) {
         ModelAndView modelAndView = new ModelAndView();
@@ -27,8 +31,6 @@ public class EditUserController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ModelAndView saveUserEdition(@ModelAttribute("user") User user, @SessionAttribute("user") User sessionUser,
                                         ModelAndView modelAndView) {
-        AbstractApplicationContext ctx = new ClassPathXmlApplicationContext("database.xml");
-        UserDAO userDAO = (UserDAO) ctx.getBean("userDAO");
         User userFind = null;
         if (!user.getLogin().equals(sessionUser.getLogin()))
             userFind = userDAO.findUserByLogin(user.getLogin());

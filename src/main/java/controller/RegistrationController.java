@@ -2,6 +2,7 @@ package controller;
 
 import database.UserDAO;
 import entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,10 @@ import org.springframework.web.servlet.ModelAndView;
 @SessionAttributes("user")
 public class RegistrationController {
 
+    @Autowired
+    UserDAO userDAO;
+
+
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView start() {
         ModelAndView modelAndView = new ModelAndView();
@@ -32,8 +37,6 @@ public class RegistrationController {
                                      @RequestParam("firstname") String firstname,
                                      @RequestParam("lastname") String lastname,
                                      @RequestParam("email") String email) {
-        AbstractApplicationContext ctx = new ClassPathXmlApplicationContext("database.xml");
-        UserDAO userDAO = (UserDAO) ctx.getBean("userDAO");
         User user = userDAO.findUserByLogin(login);
         if (user == null) {
             userDAO.addUser(login, password, firstname, lastname, email);
