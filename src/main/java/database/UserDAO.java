@@ -2,6 +2,7 @@ package database;
 
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -33,6 +34,19 @@ public class UserDAO implements RowMapper<User>{
     public void addUser(String login, String pass, String firstname, String lastname, String email) {
         this.jdbcTemplate.update("insert into userinfo (login, password, firstname, lastname, email)" +
                 " values (?, ?, ?, ?, ?)", login, pass, firstname, lastname, email);
+    }
+
+    public User findUserById(int id) {
+
+        User returnUser = null;
+        try {
+            returnUser = this.jdbcTemplate.queryForObject("select * from userinfo where iduser = ?",
+                    new Object[]{id}, this);
+        } catch (IncorrectResultSizeDataAccessException ex) {
+            return null;
+        }
+        return returnUser;
+
     }
 
     public User findUserByLogin(String login) {

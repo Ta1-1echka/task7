@@ -3,6 +3,7 @@ package controller;
 import database.UserDAO;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class RegistrationController {
 
     @Autowired
+    @Qualifier("userDAO")
     UserDAO userDAO;
 
 

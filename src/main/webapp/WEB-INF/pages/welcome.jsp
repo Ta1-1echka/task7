@@ -11,7 +11,7 @@
     <title>Welcome page</title>
 </head>
 <body>
-<form  action="/edit" method="post" modelAttribute="user">
+<form  action="/edit" method="post" modelAttribute="sessionUser">
     <table align="center">
         <tr>
             <td>Login</td>

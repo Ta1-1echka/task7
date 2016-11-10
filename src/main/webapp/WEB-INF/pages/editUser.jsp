@@ -14,7 +14,7 @@
     <title>Редактирование информации о пользователе</title>
 </head>
 <body>
-<form:form action="/edit/save" method="post" modelAttribute="user">
+<form:form action="/edit/save" method="post" modelAttribute="user" >
     <table align="center">
         <tr>
             <td>Login</td>
